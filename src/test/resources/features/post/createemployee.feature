@@ -5,8 +5,8 @@ Feature: Registrar un empleado
   requiero crear un empleado
   para poder visualizar correctamente la informacion en las consultas
 
-  @test-01
+  @test-02
   Scenario: Registrar exitosamente un empleado
-    Given que el usuario está en la pagina de empleados
-    When registra a un empleado
-    Then la creación será exitosa
+    Given se quiere registrar un empleado
+    When se envia la información del empleado
+    Then se deberá registrar exitosamente
