@@ -1,5 +1,6 @@
 package co.com.lulo.stepdefinition.get;
 
+import co.com.lulo.exception.FailedCodeStatus;
 import co.com.lulo.model.employee.Data;
 import co.com.lulo.model.employee.Employee;
 import co.com.lulo.question.StatusCode;
@@ -44,7 +45,11 @@ public class GetEmployeeStepDefinition {
         Employee employee = new Employee();
 
         actor.should(
-                seeThat("El código de respuesta fue: ", StatusCode.was(), equalTo(200)),
+                seeThat("El código de respuesta fue: ", StatusCode.was(), equalTo(200))
+                        .orComplainWith(
+                FailedCodeStatus.class,
+                FailedCodeStatus.THE_RESPONSE_FAILED
+        ),
                 seeThat("Usuario existe ", act -> data, notNullValue())
         );
     }

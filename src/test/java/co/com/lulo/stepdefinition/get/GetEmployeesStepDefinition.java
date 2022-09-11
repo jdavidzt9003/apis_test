@@ -1,7 +1,10 @@
 package co.com.lulo.stepdefinition.get;
 
+import co.com.lulo.exception.DataNull;
+import co.com.lulo.exception.FailedCodeStatus;
 import co.com.lulo.model.employees.Datum;
 import co.com.lulo.question.GetEmployees;
+import co.com.lulo.question.StatusCode;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -46,7 +49,18 @@ public class GetEmployeesStepDefinition {
                 .filter(x -> x.getId() == 1).findFirst().orElse(null);
 
         actor.should(
+                seeThat("El código de respuesta fue: ", StatusCode.was(), equalTo(200))
+                        .orComplainWith(
+                                FailedCodeStatus.class,
+                                FailedCodeStatus.THE_RESPONSE_FAILED
+                        ));
+
+        actor.should(
                 seeThat("Empleados encontrados", act -> employees, notNullValue())
+                        .orComplainWith(
+                                DataNull.class,
+                                DataNull.DATA_NULL
+                        )
         );
 
         actor.should(
